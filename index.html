@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#6366f1">
   <title>ExpenseFlow · Daily Tracker & Analytics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +30,11 @@
       --radius-sm: 0.75rem;
     }
 
+    html, body {
+      -webkit-text-size-adjust: 100%;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: linear-gradient(145deg, #f9fafb 0%, #f1f5f9 100%);
@@ -46,6 +52,7 @@
       gap: 1.75rem;
     }
 
+    /* ===================== Brand ===================== */
     .brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem; }
     .brand-icon {
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
@@ -53,11 +60,19 @@
       display: flex; align-items: center; justify-content: center;
       color: white; font-weight: 700; font-size: 1.4rem;
       box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.4);
+      flex-shrink: 0;
     }
-    .brand h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; color: var(--gray-800); }
+    .brand h1 {
+      font-size: 1.9rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--gray-800);
+    }
     .brand h1 span { color: var(--primary); }
-    .subhead { color: var(--gray-600); font-size: 0.95rem; margin-left: 3.5rem; margin-top: -0.5rem; }
+    .subhead {
+      color: var(--gray-600); font-size: 0.95rem;
+      margin-left: 3.5rem; margin-top: -0.5rem;
+    }
 
+    /* ===================== Status ===================== */
     .status-bar {
       background: #ecfdf5;
       border-left: 4px solid var(--success);
@@ -67,13 +82,10 @@
       font-size: 0.85rem;
       display: none;
     }
-    .status-bar.error {
-      background: #fef2f2;
-      border-left-color: #ef4444;
-      color: #991b1b;
-    }
+    .status-bar.error { background: #fef2f2; border-left-color: #ef4444; color: #991b1b; }
     .status-bar.show { display: block; }
 
+    /* ===================== Grid ===================== */
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
@@ -81,6 +93,7 @@
       align-items: start;
     }
 
+    /* ===================== Cards ===================== */
     .card {
       background: #ffffff;
       border-radius: var(--radius);
@@ -88,36 +101,28 @@
       box-shadow: var(--shadow-md);
       border: 1px solid rgba(255, 255, 255, 0.6);
       transition: box-shadow 0.2s;
+      min-width: 0;
     }
     .card:hover { box-shadow: var(--shadow-lg); }
 
     .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;
     }
     .card-header h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: var(--gray-700);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em;
+      color: var(--gray-700); display: flex; align-items: center; gap: 0.5rem;
     }
     .card-header h2 i { color: var(--primary); font-style: normal; font-size: 1.3rem; }
 
+    /* ===================== Form ===================== */
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.2rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
     .form-group.full-width { grid-column: span 2; }
 
     label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      color: var(--gray-600);
+      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.03em; color: var(--gray-600);
     }
 
     input, select {
@@ -130,30 +135,23 @@
       transition: all 0.15s;
       color: var(--gray-800);
       width: 100%;
+      min-width: 0;
     }
     input:focus, select:focus {
-      outline: none;
-      border-color: var(--primary);
+      outline: none; border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     }
 
     .btn-primary {
       grid-column: span 2;
       background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: white;
-      border: none;
-      font-weight: 600;
-      padding: 0.85rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
+      color: white; border: none; font-weight: 600;
+      padding: 0.85rem; border-radius: var(--radius-sm);
+      font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
       box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
       margin-top: 0.25rem;
+      -webkit-appearance: none; appearance: none;
     }
     .btn-primary:hover {
       background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
@@ -163,140 +161,179 @@
     .btn-primary:disabled { opacity: 0.7; transform: none; box-shadow: none; cursor: not-allowed; }
 
     .success-msg {
-      background: #ecfdf5;
-      color: #065f46;
-      padding: 0.75rem;
-      border-radius: var(--radius-sm);
-      font-weight: 500;
-      font-size: 0.9rem;
-      text-align: center;
-      margin-top: 1rem;
-      display: none;
+      background: #ecfdf5; color: #065f46;
+      padding: 0.75rem; border-radius: var(--radius-sm);
+      font-weight: 500; font-size: 0.9rem; text-align: center;
+      margin-top: 1rem; display: none;
       border-left: 4px solid var(--success);
     }
 
+    /* ===================== Analytics Header / Filters ===================== */
     .analytics-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;
     }
     .analytics-top h2 { font-size: 1.2rem; font-weight: 600; color: var(--gray-700); }
 
-    .filter-group { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .filter-group {
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    }
     .filter-group label { font-size: 0.75rem; margin: 0; color: var(--gray-500); }
     .filter-group select, .filter-group input {
-      padding: 0.5rem 0.8rem;
-      font-size: 0.85rem;
-      border-radius: 0.6rem;
-      width: auto;
-      min-width: 130px;
+      padding: 0.5rem 0.8rem; font-size: 0.85rem;
+      border-radius: 0.6rem; width: auto; min-width: 130px;
     }
 
-    .custom-date-container { display: none; gap: 0.5rem; align-items: center; }
+    .custom-date-container { display: none; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
     .custom-date-container.active { display: flex; }
 
+    /* ===================== KPI ===================== */
     .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-bottom: 1.5rem;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1rem; margin-bottom: 1.5rem;
     }
     .kpi-card {
-      background: var(--gray-50);
-      border-radius: var(--radius-sm);
-      padding: 1.2rem 1rem;
-      border: 1px solid var(--gray-200);
+      background: var(--gray-50); border-radius: var(--radius-sm);
+      padding: 1.2rem 1rem; border: 1px solid var(--gray-200);
+      min-width: 0;
     }
     .kpi-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--gray-600);
-      margin-bottom: 0.35rem;
+      font-size: 0.7rem; text-transform: uppercase; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--gray-600); margin-bottom: 0.35rem;
     }
     .kpi-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1.2;
-      letter-spacing: -0.02em;
+      font-size: 1.8rem; font-weight: 700; color: var(--primary);
+      line-height: 1.2; letter-spacing: -0.02em;
+      word-break: break-word;
     }
     .kpi-sub { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; }
 
+    /* ===================== Charts ===================== */
     .charts-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      margin-bottom: 1.5rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.25rem; margin-bottom: 1.5rem;
     }
     .chart-box {
-      background: var(--gray-50);
-      border-radius: var(--radius-sm);
-      padding: 1rem;
-      border: 1px solid var(--gray-200);
-      height: 220px;
-      display: flex;
-      flex-direction: column;
+      background: var(--gray-50); border-radius: var(--radius-sm);
+      padding: 1rem; border: 1px solid var(--gray-200);
+      height: 220px; display: flex; flex-direction: column;
+      min-width: 0;
     }
     .chart-box h4 {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--gray-600);
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
+      font-size: 0.8rem; font-weight: 600; color: var(--gray-600);
+      margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.03em;
     }
     .chart-container { flex: 1; position: relative; min-height: 0; }
 
+    /* ===================== Table ===================== */
     .table-wrapper {
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
       border-radius: var(--radius-sm);
       border: 1px solid var(--gray-200);
       margin-top: 1rem;
     }
     table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-      background: white;
-      white-space: nowrap;
+      width: 100%; border-collapse: collapse;
+      font-size: 0.85rem; background: white; white-space: nowrap;
     }
     th {
-      background: var(--gray-100);
-      color: var(--gray-700);
-      font-weight: 600;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 0.8rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--gray-200);
+      background: var(--gray-100); color: var(--gray-700);
+      font-weight: 600; font-size: 0.7rem; text-transform: uppercase;
+      letter-spacing: 0.04em; padding: 0.8rem 1rem;
+      text-align: left; border-bottom: 1px solid var(--gray-200);
+      position: sticky; top: 0; z-index: 1;
     }
     td {
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid var(--gray-100);
+      padding: 0.8rem 1rem; border-bottom: 1px solid var(--gray-100);
       color: var(--gray-700);
     }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #fafaff; }
     .amount-cell { font-weight: 600; color: var(--primary-dark); }
 
-    @media (max-width: 1000px) {
+    /* ==================================================================
+       RESPONSIVE BREAKPOINTS
+    ================================================================== */
+
+    /* ---- Large tablets / small laptops ---- */
+    @media (max-width: 1024px) {
       .grid-2col { grid-template-columns: 1fr; }
-      .charts-row { grid-template-columns: 1fr; }
-      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .charts-row { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ---- Tablets ---- */
+    @media (max-width: 768px) {
+      body { padding: 1.5rem 1rem; }
+      .brand h1 { font-size: 1.6rem; }
+      .subhead { font-size: 0.85rem; margin-left: 3rem; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .kpi-value { font-size: 1.5rem; }
+      .charts-row { grid-template-columns: 1fr; }
+      .chart-box { height: 240px; }
+      .analytics-top { flex-direction: column; align-items: stretch; }
+      .filter-group { justify-content: flex-start; }
+      .filter-group select { flex: 1; min-width: 0; }
+    }
+
+    /* ---- Mobile phones ---- */
     @media (max-width: 600px) {
-      body { padding: 1rem; }
+      body { padding: 1rem 0.75rem; }
+      .dashboard { gap: 1.25rem; }
+      .card { padding: 1.25rem 1rem; }
+      .card-header h2 { font-size: 1.05rem; }
       .form-grid { grid-template-columns: 1fr; }
       .form-group.full-width, .btn-primary { grid-column: span 1; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .kpi-card { padding: 1rem 0.85rem; }
+      .kpi-value { font-size: 1.35rem; }
+      .kpi-label { font-size: 0.65rem; }
+      .kpi-sub { font-size: 0.7rem; }
+      .chart-box { height: 260px; }
+      .chart-box h4 { font-size: 0.72rem; }
+      .filter-group { flex-direction: column; align-items: stretch; width: 100%; }
+      .filter-group label { align-self: flex-start; }
+      .filter-group select,
+      .filter-group input {
+        width: 100%; min-width: 0; font-size: 0.9rem; padding: 0.65rem 0.8rem;
+      }
+      .custom-date-container { width: 100%; }
+      .custom-date-container input { flex: 1; }
+      /* Prevent iOS zoom on focus */
+      input, select { font-size: 16px; }
+      .btn-primary { padding: 1rem; font-size: 1rem; }
+      th, td { padding: 0.65rem 0.75rem; font-size: 0.78rem; }
+    }
+
+    /* ---- Very small phones ---- */
+    @media (max-width: 400px) {
+      body { padding: 0.75rem 0.5rem; }
+      .brand h1 { font-size: 1.4rem; }
+      .brand-icon { width: 2.35rem; height: 2.35rem; font-size: 1.15rem; }
+      .subhead { margin-left: 2.6rem; font-size: 0.78rem; }
       .kpi-grid { grid-template-columns: 1fr; }
-      .filter-group { width: 100%; }
-      .analytics-top { flex-direction: column; align-items: flex-start; }
+      .kpi-value { font-size: 1.5rem; }
+      .chart-box { height: 230px; }
+      .card { padding: 1rem 0.85rem; }
+      th, td { padding: 0.55rem 0.6rem; font-size: 0.74rem; }
+    }
+
+    /* ---- Landscape phones (short height) ---- */
+    @media (max-height: 480px) and (orientation: landscape) {
+      .chart-box { height: 200px; }
+      body { padding: 0.75rem; }
+    }
+
+    /* ---- Print ---- */
+    @media print {
+      body { background: white; padding: 0; }
+      .card { box-shadow: none; border: 1px solid #ddd; }
+      .btn-primary, .filter-group, form { display: none; }
+    }
+
+    /* ---- Reduced motion ---- */
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
     }
   </style>
 </head>
@@ -353,7 +390,7 @@
       </div>
 
       <!-- Right: Analytics -->
-      <div class="card" style="padding: 1.6rem;">
+      <div class="card">
         <div class="analytics-top">
           <h2><i>📊</i> Analytics Overview</h2>
           <div class="filter-group">
@@ -436,7 +473,7 @@
     /* =====================================================================
        ⚙️ CONFIG — REPLACE THIS URL with your deployed Web App URL
     ===================================================================== */
-    const API_URL = 'https://script.google.com/macros/s/AKfycbz3tqAWILMtmVkenX-WweqaXgpEQABiUinMKqF_bHbJmiMVd6r-PJDexEubl3863ULS/exec';
+    const API_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
 
     var FALLBACK_CATEGORIES = [
       'Food & Dining','Utilities','Transport','Shopping',
@@ -450,8 +487,6 @@
     var barChart = null;
 
     /* ------------------------------------------------------------------ */
-    /* Helpers                                                            */
-    /* ------------------------------------------------------------------ */
     function getLocalTodayISO() {
       var now = new Date();
       var tzOffset = now.getTimezoneOffset() * 60000;
@@ -463,9 +498,7 @@
       bar.textContent = msg;
       bar.classList.toggle('error', !!isError);
       bar.classList.add('show');
-      if (!isError) {
-        setTimeout(function () { bar.classList.remove('show'); }, 4000);
-      }
+      if (!isError) setTimeout(function () { bar.classList.remove('show'); }, 4000);
     }
 
     function replaceOptions(selectId, values) {
@@ -479,9 +512,7 @@
         opt.textContent = v;
         sel.appendChild(opt);
       });
-      if (currentValue && values.indexOf(currentValue) !== -1) {
-        sel.value = currentValue;
-      }
+      if (currentValue && values.indexOf(currentValue) !== -1) sel.value = currentValue;
     }
 
     function populateDropdowns(options) {
@@ -508,15 +539,12 @@
         return;
       }
 
-      // Fetch options from server (optional — fallbacks already shown)
       fetch(API_URL + '?action=options')
         .then(function (r) { return r.json(); })
         .then(function (data) {
           if (data && !data.error) populateDropdowns(data);
         })
-        .catch(function (e) {
-          console.warn('Options fetch failed, using fallbacks:', e);
-        });
+        .catch(function (e) { console.warn('Options fetch failed, using fallbacks:', e); });
 
       loadAnalytics();
     })();
@@ -543,24 +571,19 @@
 
       fetch(API_URL, {
         method: 'POST',
-        // Using text/plain avoids CORS preflight (Apps Script doesn't reply to OPTIONS)
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(data)
       })
         .then(function (r) { return r.json(); })
         .then(function (res) {
-          if (res && res.success === false) {
-            throw new Error(res.error || 'Unknown error');
-          }
+          if (res && res.success === false) throw new Error(res.error || 'Unknown error');
           document.getElementById('expenseForm').reset();
           document.getElementById('date').value = getLocalTodayISO();
           btn.disabled = false;
           btn.textContent = '➕ Add Expense';
-
           var msg = document.getElementById('successMsg');
           msg.style.display = 'block';
           setTimeout(function () { msg.style.display = 'none'; }, 3000);
-
           loadAnalytics();
         })
         .catch(function (err) {
@@ -649,10 +672,8 @@
       filteredItems.forEach(function (item) {
         var amount = Number(item.amount) || 0;
         totalAmount += amount;
-
         var cat = item.category || 'Others';
         byCategory[cat] = (byCategory[cat] || 0) + amount;
-
         var dateObj = new Date(item.date);
         var monthYearStr = 'Unknown';
         if (!isNaN(dateObj.getTime())) {
@@ -700,24 +721,17 @@
           datasets: [{
             data: catValues.length ? catValues : [1],
             backgroundColor: catLabels.length ? catColors.slice(0, catLabels.length) : ['#e5e7eb'],
-            borderWidth: 2,
-            borderColor: '#ffffff',
-            hoverOffset: 6
+            borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6
           }]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '65%',
+          responsive: true, maintainAspectRatio: false, cutout: '65%',
           plugins: {
             legend: {
               position: 'bottom',
               labels: {
-                boxWidth: 10,
-                font: { size: 9, family: 'Inter' },
-                padding: 8,
-                usePointStyle: true,
-                pointStyle: 'circle'
+                boxWidth: 10, font: { size: 9, family: 'Inter' }, padding: 8,
+                usePointStyle: true, pointStyle: 'circle'
               }
             },
             tooltip: {
@@ -736,12 +750,9 @@
       var monthOrder = { January:1, February:2, March:3, April:4, May:5, June:6,
                          July:7, August:8, September:9, October:10, November:11, December:12 };
       monthLabels.sort(function (a, b) {
-        var partsA = a.split(' ');
-        var partsB = b.split(' ');
-        var mA = partsA[0], yA = partsA[1];
-        var mB = partsB[0], yB = partsB[1];
-        if (yA !== yB) return parseInt(yA) - parseInt(yB);
-        return (monthOrder[mA] || 0) - (monthOrder[mB] || 0);
+        var pA = a.split(' '), pB = b.split(' ');
+        if (pA[1] !== pB[1]) return parseInt(pA[1]) - parseInt(pB[1]);
+        return (monthOrder[pA[0]] || 0) - (monthOrder[pB[0]] || 0);
       });
       var barValues = monthLabels.map(function (m) { return byMonthYear[m]; });
 
@@ -753,14 +764,11 @@
             label: 'Spending (₹)',
             data: barValues.length ? barValues : [0],
             backgroundColor: 'rgba(99, 102, 241, 0.75)',
-            borderRadius: 6,
-            borderSkipped: false,
-            barPercentage: 0.65
+            borderRadius: 6, borderSkipped: false, barPercentage: 0.65
           }]
         },
         options: {
-          responsive: true,
-          maintainAspectRatio: false,
+          responsive: true, maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
             tooltip: {
