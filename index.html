@@ -7,7 +7,7 @@
   <title>ExpenseFlow · Daily Tracker & Analytics</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -15,19 +15,35 @@
     :root {
       --primary: #6366f1;
       --primary-dark: #4f46e5;
+      --primary-light: #eef2ff;
       --accent: #8b5cf6;
+      --accent-2: #ec4899;
+      --cyan: #06b6d4;
       --success: #10b981;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.03);
-      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.03);
-      --radius: 1rem;
-      --radius-sm: 0.75rem;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+
+      --ink-900: #0f172a;
+      --ink-800: #1e293b;
+      --ink-700: #334155;
+      --ink-600: #475569;
+      --ink-500: #64748b;
+      --ink-400: #94a3b8;
+      --ink-300: #cbd5e1;
+      --ink-200: #e2e8f0;
+      --ink-100: #f1f5f9;
+      --ink-50: #f8fafc;
+
+      --radius-xl: 1.5rem;
+      --radius-lg: 1.125rem;
+      --radius: 0.875rem;
+      --radius-sm: 0.625rem;
+
+      --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.04);
+      --shadow-md: 0 4px 16px -4px rgb(15 23 42 / 0.08), 0 2px 6px -2px rgb(15 23 42 / 0.04);
+      --shadow-lg: 0 20px 40px -12px rgb(15 23 42 / 0.12), 0 8px 16px -8px rgb(15 23 42 / 0.06);
+      --shadow-xl: 0 32px 64px -16px rgb(15 23 42 / 0.18), 0 16px 32px -16px rgb(15 23 42 / 0.08);
+      --shadow-glow: 0 0 0 4px rgb(99 102 241 / 0.12);
     }
 
     html, body {
@@ -37,15 +53,21 @@
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(145deg, #f9fafb 0%, #f1f5f9 100%);
-      color: var(--gray-800);
-      padding: 2rem 1.5rem;
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #eef2ff 0%, transparent 60%),
+        radial-gradient(1000px 500px at 100% 10%, #fdf4ff 0%, transparent 55%),
+        radial-gradient(800px 500px at 50% 110%, #ecfeff 0%, transparent 60%),
+        linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      background-attachment: fixed;
+      color: var(--ink-800);
+      padding: 2rem 1.5rem 3rem;
       min-height: 100vh;
-      line-height: 1.5;
+      line-height: 1.55;
+      font-feature-settings: "ss01", "cv11";
     }
 
     .dashboard {
-      max-width: 1300px;
+      max-width: 1340px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -53,285 +75,671 @@
     }
 
     /* ===================== Brand ===================== */
-    .brand { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem; }
+    .brand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 0.85rem;
+    }
     .brand-icon {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      width: 2.75rem; height: 2.75rem; border-radius: 1rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--accent-2) 100%);
+      width: 3rem; height: 3rem; border-radius: 1rem;
       display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 700; font-size: 1.4rem;
-      box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.4);
+      color: white; font-weight: 800; font-size: 1.5rem;
+      box-shadow:
+        0 10px 24px -8px rgba(99, 102, 241, 0.55),
+        inset 0 1px 0 rgba(255,255,255,0.3);
       flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
     }
-    .brand h1 {
-      font-size: 1.9rem; font-weight: 700;
-      letter-spacing: -0.02em; color: var(--gray-800);
+    .brand-icon::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35), transparent 45%);
+      pointer-events: none;
     }
-    .brand h1 span { color: var(--primary); }
-    .subhead {
-      color: var(--gray-600); font-size: 0.95rem;
-      margin-left: 3.5rem; margin-top: -0.5rem;
+    .brand-text h1 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.75rem; font-weight: 700;
+      letter-spacing: -0.03em; color: var(--ink-900);
+      line-height: 1.1;
+    }
+    .brand-text h1 span {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--accent-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-text .subhead {
+      color: var(--ink-500); font-size: 0.82rem;
+      font-weight: 500; margin-top: 0.15rem;
     }
 
-    /* ===================== Status ===================== */
-    .status-bar {
-      background: #ecfdf5;
-      border-left: 4px solid var(--success);
-      color: #065f46;
-      padding: 0.6rem 0.9rem;
-      border-radius: var(--radius-sm);
-      font-size: 0.85rem;
-      display: none;
+    .live-chip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.9);
+      padding: 0.5rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-600);
+      box-shadow: var(--shadow-sm);
     }
-    .status-bar.error { background: #fef2f2; border-left-color: #ef4444; color: #991b1b; }
-    .status-bar.show { display: block; }
+    .live-chip .dot {
+      width: 0.5rem; height: 0.5rem; border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.55); }
+      70%  { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* ===================== Status bar ===================== */
+    .status-bar {
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: none;
+      box-shadow: var(--shadow-sm);
+    }
+    .status-bar.error {
+      background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+    .status-bar.show {
+      display: block;
+      animation: slideDown 0.3s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
     /* ===================== Grid ===================== */
     .grid-2col {
       display: grid;
       grid-template-columns: 1fr 1.6fr;
-      gap: 1.75rem;
+      gap: 1.5rem;
       align-items: start;
     }
 
-    /* ===================== Cards ===================== */
+    /* ===================== Glass cards ===================== */
     .card {
-      background: #ffffff;
-      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-radius: var(--radius-xl);
       padding: 1.75rem 1.6rem;
-      box-shadow: var(--shadow-md);
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      transition: box-shadow 0.2s;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
       min-width: 0;
+      position: relative;
+      overflow: hidden;
     }
-    .card:hover { box-shadow: var(--shadow-lg); }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(99,102,241,0.25), rgba(139,92,246,0.1) 40%, transparent 70%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
 
     .card-header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 1.35rem; flex-wrap: wrap; gap: 0.5rem;
     }
     .card-header h2 {
-      font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em;
-      color: var(--gray-700); display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--ink-900);
+      display: flex; align-items: center; gap: 0.55rem;
     }
-    .card-header h2 i { color: var(--primary); font-style: normal; font-size: 1.3rem; }
+    .card-header h2 i {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.9rem; height: 1.9rem; border-radius: 0.65rem;
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fdf4ff 100%);
+      color: var(--primary);
+      font-style: normal; font-size: 0.95rem;
+    }
 
-    /* ===================== Form ===================== */
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 1.2rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+    /* ===================== Multi-item entry ===================== */
+    .items-container {
+      display: flex; flex-direction: column;
+      gap: 0.9rem; margin-bottom: 1rem;
+    }
+
+    .item-block {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      border: 1.5px solid var(--ink-200);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .item-block:hover {
+      border-color: #c7d2fe;
+      box-shadow: 0 4px 12px -4px rgba(99, 102, 241, 0.12);
+    }
+
+    .item-block-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.8rem;
+    }
+    .item-block-header .badge {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      letter-spacing: 0.03em;
+      box-shadow: 0 2px 6px -1px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-remove-item {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: var(--danger);
+      font-size: 0.72rem; font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      cursor: pointer; transition: all 0.15s; font-family: inherit;
+    }
+    .btn-remove-item:hover {
+      background: var(--danger); color: white; border-color: var(--danger);
+      transform: scale(1.03);
+    }
+
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.75rem 0.9rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; min-width: 0; }
     .form-group.full-width { grid-column: span 2; }
 
     label {
-      font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-      letter-spacing: 0.03em; color: var(--gray-600);
+      font-size: 0.68rem; font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-500);
     }
 
     input, select {
-      padding: 0.7rem 0.9rem;
-      border: 1.5px solid var(--gray-200);
+      padding: 0.65rem 0.85rem;
+      border: 1.5px solid var(--ink-200);
       border-radius: var(--radius-sm);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-family: 'Inter', sans-serif;
       background: white;
-      transition: all 0.15s;
-      color: var(--gray-800);
-      width: 100%;
-      min-width: 0;
+      transition: all 0.15s ease;
+      color: var(--ink-800);
+      width: 100%; min-width: 0;
     }
+    input:hover, select:hover { border-color: var(--ink-300); }
     input:focus, select:focus {
-      outline: none; border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* ---- Action row ---- */
+    .action-row {
+      display: flex; gap: 0.75rem;
+      flex-wrap: wrap; align-items: stretch;
+    }
+
+    .btn-add-item {
+      flex: 0 0 auto;
+      background: white;
+      border: 1.5px dashed #c7d2fe;
+      color: var(--primary-dark);
+      font-weight: 600;
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+    }
+    .btn-add-item:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
     }
 
     .btn-primary {
-      grid-column: span 2;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      color: white; border: none; font-weight: 600;
-      padding: 0.85rem; border-radius: var(--radius-sm);
-      font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+      flex: 1 1 200px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 55%, var(--accent-2) 100%);
+      background-size: 200% 200%;
+      color: white; border: none; font-weight: 700;
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem; cursor: pointer; transition: all 0.3s ease;
       display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
-      margin-top: 0.25rem;
+      box-shadow: 0 8px 20px -8px rgba(99, 102, 241, 0.55);
+      font-family: inherit;
+      letter-spacing: 0.01em;
       -webkit-appearance: none; appearance: none;
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      background-position: 100% 50%;
       transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(99, 102, 241, 0.35);
+      box-shadow: 0 12px 28px -10px rgba(99, 102, 241, 0.7);
     }
-    .btn-primary:disabled { opacity: 0.7; transform: none; box-shadow: none; cursor: not-allowed; }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled {
+      opacity: 0.6; transform: none; cursor: not-allowed;
+      box-shadow: none;
+    }
 
     .success-msg {
-      background: #ecfdf5; color: #065f46;
-      padding: 0.75rem; border-radius: var(--radius-sm);
-      font-weight: 500; font-size: 0.9rem; text-align: center;
-      margin-top: 1rem; display: none;
-      border-left: 4px solid var(--success);
+      background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 100%);
+      color: #065f46;
+      padding: 0.75rem; border-radius: var(--radius);
+      font-weight: 600; font-size: 0.88rem;
+      text-align: center; margin-top: 1rem;
+      display: none;
+      border: 1px solid #a7f3d0;
+      animation: slideDown 0.3s ease-out;
     }
 
-    /* ===================== Analytics Header / Filters ===================== */
+    /* ===================== Analytics header ===================== */
     .analytics-top {
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem;
     }
-    .analytics-top h2 { font-size: 1.2rem; font-weight: 600; color: var(--gray-700); }
+    .analytics-top h2 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      letter-spacing: -0.02em; color: var(--ink-900);
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .analytics-top h2 i {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.9rem; height: 1.9rem; border-radius: 0.65rem;
+      background: linear-gradient(135deg, var(--primary-light) 0%, #fdf4ff 100%);
+      color: var(--primary);
+      font-style: normal; font-size: 0.95rem;
+    }
 
     .filter-group {
-      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+      display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
     }
-    .filter-group label { font-size: 0.75rem; margin: 0; color: var(--gray-500); }
+    .filter-group label {
+      font-size: 0.7rem; margin: 0;
+      color: var(--ink-500); font-weight: 700;
+    }
     .filter-group select, .filter-group input {
-      padding: 0.5rem 0.8rem; font-size: 0.85rem;
-      border-radius: 0.6rem; width: auto; min-width: 130px;
+      padding: 0.45rem 0.8rem;
+      font-size: 0.82rem;
+      border-radius: 999px;
+      width: auto; min-width: 130px;
+      border-color: var(--ink-200);
+      background: white;
     }
 
     .custom-date-container { display: none; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
     .custom-date-container.active { display: flex; }
 
-    /* ===================== KPI ===================== */
+    /* ===================== KPI cards ===================== */
     .kpi-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
       gap: 1rem; margin-bottom: 1.5rem;
     }
     .kpi-card {
-      background: var(--gray-50); border-radius: var(--radius-sm);
-      padding: 1.2rem 1rem; border: 1px solid var(--gray-200);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      border-radius: var(--radius-lg);
+      padding: 1.15rem 1rem 1.2rem;
+      border: 1.5px solid var(--ink-200);
       min-width: 0;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .kpi-card:hover {
+      border-color: #c7d2fe;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .kpi-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--accent-2));
+      opacity: 0.9;
     }
     .kpi-label {
-      font-size: 0.7rem; text-transform: uppercase; font-weight: 600;
-      letter-spacing: 0.04em; color: var(--gray-600); margin-bottom: 0.35rem;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--ink-500);
+      margin-bottom: 0.4rem;
+      display: flex; align-items: center; gap: 0.35rem;
     }
+    .kpi-label .icon { font-size: 0.85rem; }
     .kpi-value {
-      font-size: 1.8rem; font-weight: 700; color: var(--primary);
-      line-height: 1.2; letter-spacing: -0.02em;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.7rem; font-weight: 700;
+      color: var(--ink-900);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
       word-break: break-word;
     }
-    .kpi-sub { font-size: 0.75rem; color: var(--gray-500); margin-top: 0.25rem; }
+    .kpi-card:nth-child(1) .kpi-value {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .kpi-sub {
+      font-size: 0.72rem;
+      color: var(--ink-500);
+      margin-top: 0.3rem;
+      font-weight: 500;
+    }
 
     /* ===================== Charts ===================== */
     .charts-row {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.25rem; margin-bottom: 1.5rem;
+      gap: 1rem; margin-bottom: 1.5rem;
     }
     .chart-box {
-      background: var(--gray-50); border-radius: var(--radius-sm);
-      padding: 1rem; border: 1px solid var(--gray-200);
-      height: 220px; display: flex; flex-direction: column;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      border: 1.5px solid var(--ink-200);
+      height: 225px;
+      display: flex; flex-direction: column;
       min-width: 0;
+      transition: all 0.2s ease;
+    }
+    .chart-box:hover {
+      border-color: #c7d2fe;
+      box-shadow: var(--shadow-sm);
     }
     .chart-box h4 {
-      font-size: 0.8rem; font-weight: 600; color: var(--gray-600);
-      margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.03em;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--ink-500);
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
     .chart-container { flex: 1; position: relative; min-height: 0; }
+
+    /* ===================== Table toolbar ===================== */
+    .table-toolbar {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.8rem;
+    }
+    .table-toolbar h4 {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--ink-500);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+
+    .search-box { position: relative; flex: 1; min-width: 180px; max-width: 320px; }
+    .search-box input {
+      padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+      font-size: 0.84rem;
+      border-radius: 999px;
+      background: white;
+    }
+    .search-box::before {
+      content: '🔍'; position: absolute;
+      left: 0.85rem; top: 50%; transform: translateY(-50%);
+      font-size: 0.82rem; opacity: 0.55; pointer-events: none;
+    }
 
     /* ===================== Table ===================== */
     .table-wrapper {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--gray-200);
-      margin-top: 1rem;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--ink-200);
+      background: white;
     }
     table {
       width: 100%; border-collapse: collapse;
-      font-size: 0.85rem; background: white; white-space: nowrap;
+      font-size: 0.84rem; background: white; white-space: nowrap;
     }
     th {
-      background: var(--gray-100); color: var(--gray-700);
-      font-weight: 600; font-size: 0.7rem; text-transform: uppercase;
-      letter-spacing: 0.04em; padding: 0.8rem 1rem;
-      text-align: left; border-bottom: 1px solid var(--gray-200);
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      color: var(--ink-600);
+      font-weight: 700; font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1.5px solid var(--ink-200);
       position: sticky; top: 0; z-index: 1;
     }
     td {
-      padding: 0.8rem 1rem; border-bottom: 1px solid var(--gray-100);
-      color: var(--gray-700);
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid var(--ink-100);
+      color: var(--ink-700);
+      font-size: 0.84rem;
     }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #fafaff; }
-    .amount-cell { font-weight: 600; color: var(--primary-dark); }
-
-    /* ==================================================================
-       RESPONSIVE BREAKPOINTS
-    ================================================================== */
-
-    /* ---- Large tablets / small laptops ---- */
-    @media (max-width: 1024px) {
-      .grid-2col { grid-template-columns: 1fr; }
-      .charts-row { grid-template-columns: 1fr 1fr; }
+    tr { transition: background 0.15s ease; }
+    tr:hover td { background: linear-gradient(90deg, #f8fafc 0%, #fefcff 100%); }
+    .amount-cell {
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-variant-numeric: tabular-nums;
+    }
+    .category-chip {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: var(--primary-light);
+      color: var(--primary-dark);
     }
 
-    /* ---- Tablets ---- */
+    .btn-edit {
+      background: white;
+      border: 1.5px solid #c7d2fe;
+      color: var(--primary-dark);
+      font-size: 0.72rem; font-weight: 700;
+      padding: 0.32rem 0.7rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+      display: inline-flex; align-items: center; gap: 0.3rem;
+    }
+    .btn-edit:hover {
+      background: var(--primary); color: white;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px -2px rgba(99, 102, 241, 0.4);
+    }
+
+    /* ===================== Modal ===================== */
+    .modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: none;
+      align-items: center; justify-content: center;
+      padding: 1rem; z-index: 1000;
+    }
+    .modal-backdrop.show { display: flex; }
+    .modal {
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      width: 100%; max-width: 540px;
+      max-height: 92vh; overflow-y: auto;
+      animation: modalIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 1px solid rgba(255,255,255,0.9);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.35rem 1.5rem 0.6rem;
+    }
+    .modal-header h3 {
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--ink-900);
+      letter-spacing: -0.02em;
+    }
+    .modal-close {
+      background: var(--ink-100);
+      border: none;
+      width: 2rem; height: 2rem;
+      border-radius: 50%;
+      font-size: 1.15rem;
+      line-height: 1;
+      color: var(--ink-500);
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: all 0.15s;
+    }
+    .modal-close:hover {
+      background: var(--ink-200); color: var(--ink-800);
+      transform: rotate(90deg);
+    }
+    .modal-body { padding: 0.5rem 1.5rem 1rem; }
+    .modal-footer {
+      display: flex; justify-content: flex-end; gap: 0.75rem;
+      padding: 0.9rem 1.5rem 1.35rem;
+      border-top: 1px solid var(--ink-100);
+      flex-wrap: wrap;
+    }
+    .btn-secondary {
+      background: white; color: var(--ink-700);
+      border: 1.5px solid var(--ink-200); font-weight: 600;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      font-size: 0.88rem; cursor: pointer;
+      transition: all 0.15s; font-family: inherit;
+    }
+    .btn-secondary:hover { background: var(--ink-100); }
+    .btn-save {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white; border: none; font-weight: 700;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.88rem; cursor: pointer;
+      transition: all 0.2s; font-family: inherit;
+      box-shadow: 0 6px 16px -6px rgba(99, 102, 241, 0.5);
+    }
+    .btn-save:hover {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px -8px rgba(99, 102, 241, 0.6);
+    }
+    .btn-save:disabled { opacity: 0.6; transform: none; cursor: not-allowed; box-shadow: none; }
+
+    .edit-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.85rem 1rem; margin-top: 0.75rem;
+    }
+    .edit-grid .form-group.full-width { grid-column: span 2; }
+
+    /* ===================== Responsive ===================== */
+    @media (max-width: 1024px) {
+      .grid-2col { grid-template-columns: 1fr; }
+    }
     @media (max-width: 768px) {
-      body { padding: 1.5rem 1rem; }
-      .brand h1 { font-size: 1.6rem; }
-      .subhead { font-size: 0.85rem; margin-left: 3rem; }
+      body { padding: 1.5rem 1rem 2.5rem; }
+      .brand-text h1 { font-size: 1.5rem; }
+      .brand-icon { width: 2.6rem; height: 2.6rem; font-size: 1.3rem; }
       .kpi-grid { grid-template-columns: 1fr 1fr; }
-      .kpi-value { font-size: 1.5rem; }
+      .kpi-value { font-size: 1.45rem; }
       .charts-row { grid-template-columns: 1fr; }
       .chart-box { height: 240px; }
       .analytics-top { flex-direction: column; align-items: stretch; }
-      .filter-group { justify-content: flex-start; }
       .filter-group select { flex: 1; min-width: 0; }
     }
-
-    /* ---- Mobile phones ---- */
     @media (max-width: 600px) {
-      body { padding: 1rem 0.75rem; }
+      body { padding: 1rem 0.75rem 2rem; }
       .dashboard { gap: 1.25rem; }
-      .card { padding: 1.25rem 1rem; }
-      .card-header h2 { font-size: 1.05rem; }
+      .card { padding: 1.25rem 1.1rem; border-radius: var(--radius-lg); }
+      .card-header h2, .analytics-top h2 { font-size: 1.02rem; }
       .form-grid { grid-template-columns: 1fr; }
-      .form-group.full-width, .btn-primary { grid-column: span 1; }
-      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .form-group.full-width { grid-column: span 1; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 0.7rem; }
       .kpi-card { padding: 1rem 0.85rem; }
-      .kpi-value { font-size: 1.35rem; }
-      .kpi-label { font-size: 0.65rem; }
-      .kpi-sub { font-size: 0.7rem; }
+      .kpi-value { font-size: 1.3rem; }
+      .kpi-label { font-size: 0.62rem; }
       .chart-box { height: 260px; }
-      .chart-box h4 { font-size: 0.72rem; }
       .filter-group { flex-direction: column; align-items: stretch; width: 100%; }
-      .filter-group label { align-self: flex-start; }
       .filter-group select,
-      .filter-group input {
-        width: 100%; min-width: 0; font-size: 0.9rem; padding: 0.65rem 0.8rem;
-      }
+      .filter-group input { width: 100%; min-width: 0; font-size: 0.88rem; }
       .custom-date-container { width: 100%; }
       .custom-date-container input { flex: 1; }
-      /* Prevent iOS zoom on focus */
       input, select { font-size: 16px; }
-      .btn-primary { padding: 1rem; font-size: 1rem; }
-      th, td { padding: 0.65rem 0.75rem; font-size: 0.78rem; }
+      .btn-primary, .btn-add-item { padding: 0.95rem; font-size: 0.92rem; }
+      .action-row { flex-direction: column; }
+      .btn-add-item, .btn-primary { width: 100%; }
+      th, td { padding: 0.65rem 0.8rem; font-size: 0.78rem; }
+      .table-toolbar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: 100%; }
+      .edit-grid { grid-template-columns: 1fr; }
+      .edit-grid .form-group.full-width { grid-column: span 1; }
+      .modal-header, .modal-body, .modal-footer { padding-left: 1.1rem; padding-right: 1.1rem; }
     }
-
-    /* ---- Very small phones ---- */
     @media (max-width: 400px) {
-      body { padding: 0.75rem 0.5rem; }
-      .brand h1 { font-size: 1.4rem; }
-      .brand-icon { width: 2.35rem; height: 2.35rem; font-size: 1.15rem; }
-      .subhead { margin-left: 2.6rem; font-size: 0.78rem; }
+      body { padding: 0.75rem 0.5rem 1.5rem; }
+      .brand-text h1 { font-size: 1.35rem; }
+      .brand-icon { width: 2.3rem; height: 2.3rem; font-size: 1.15rem; }
       .kpi-grid { grid-template-columns: 1fr; }
-      .kpi-value { font-size: 1.5rem; }
       .chart-box { height: 230px; }
-      .card { padding: 1rem 0.85rem; }
-      th, td { padding: 0.55rem 0.6rem; font-size: 0.74rem; }
+      .card { padding: 1.05rem 0.9rem; }
+      th, td { padding: 0.55rem 0.65rem; font-size: 0.74rem; }
+      .item-block { padding: 0.8rem; }
     }
 
-    /* ---- Landscape phones (short height) ---- */
-    @media (max-height: 480px) and (orientation: landscape) {
-      .chart-box { height: 200px; }
-      body { padding: 0.75rem; }
-    }
-
-    /* ---- Print ---- */
     @media print {
       body { background: white; padding: 0; }
-      .card { box-shadow: none; border: 1px solid #ddd; }
-      .btn-primary, .filter-group, form { display: none; }
+      .card { box-shadow: none; border: 1px solid #ddd; background: white; }
+      .btn-primary, .btn-add-item, .filter-group, form,
+      .search-box, .btn-edit, .modal-backdrop, .action-row,
+      .live-chip { display: none; }
     }
-
-    /* ---- Reduced motion ---- */
     @media (prefers-reduced-motion: reduce) {
       * { transition: none !important; animation: none !important; }
     }
@@ -339,53 +747,42 @@
 </head>
 <body>
   <div class="dashboard">
-    <div class="brand">
-      <div class="brand-icon">₹</div>
-      <h1>Expense<span>Flow</span></h1>
+    <!-- Brand header -->
+    <div class="brand-row">
+      <div class="brand">
+        <div class="brand-icon">₹</div>
+        <div class="brand-text">
+          <h1>Expense<span>Flow</span></h1>
+          <div class="subhead">Daily expense tracker · smart analytics</div>
+        </div>
+      </div>
+      <div class="live-chip">
+        <span class="dot"></span>
+        <span>Live sync</span>
+      </div>
     </div>
-    <div class="subhead">Daily expense tracker &amp; smart analytics</div>
 
     <div id="statusBar" class="status-bar"></div>
 
     <div class="grid-2col">
-      <!-- Left: Input form -->
+      <!-- Left: Multi-item form -->
       <div class="card">
         <div class="card-header">
-          <h2><i>✏️</i> New Expense</h2>
+          <h2><i>✏️</i> New Expenses</h2>
         </div>
-        <form id="expenseForm">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" id="date" required>
-            </div>
-            <div class="form-group">
-              <label for="category">Category</label>
-              <select id="category" required></select>
-            </div>
-            <div class="form-group full-width">
-              <label for="items">Items / Description</label>
-              <input type="text" id="items" placeholder="e.g. Weekly groceries, Coffee..." required>
-            </div>
-            <div class="form-group">
-              <label for="unit">Unit</label>
-              <select id="unit" required></select>
-            </div>
-            <div class="form-group">
-              <label for="quantity">Quantity</label>
-              <input type="number" id="quantity" step="0.01" min="0.01" placeholder="1" required>
-            </div>
-            <div class="form-group">
-              <label for="amount">Amount (₹)</label>
-              <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required>
-            </div>
-            <div class="form-group">
-              <label for="paymentMode">Payment Mode</label>
-              <select id="paymentMode" required></select>
-            </div>
-            <button type="submit" id="submitBtn" class="btn-primary">➕ Add Expense</button>
+        <form id="expenseForm" onsubmit="event.preventDefault(); submitAllItems();">
+          <div id="itemsContainer" class="items-container"></div>
+
+          <div class="action-row">
+            <button type="button" class="btn-add-item" onclick="addItemBlock()">
+              ➕ Add item
+            </button>
+            <button type="submit" id="submitBtn" class="btn-primary">
+              💾 Save All Expenses
+            </button>
           </div>
-          <div id="successMsg" class="success-msg">✅ Expense recorded successfully!</div>
+
+          <div id="successMsg" class="success-msg">✅ Expenses saved successfully!</div>
         </form>
       </div>
 
@@ -394,7 +791,7 @@
         <div class="analytics-top">
           <h2><i>📊</i> Analytics Overview</h2>
           <div class="filter-group">
-            <label for="timeFilter">Period:</label>
+            <label for="timeFilter">Period</label>
             <select id="timeFilter" onchange="handleFilterChange()">
               <option value="all">All time</option>
               <option value="today">Today</option>
@@ -405,7 +802,7 @@
             </select>
             <div id="customDateContainer" class="custom-date-container">
               <input type="date" id="startDate" onchange="filterData()">
-              <span style="font-size:0.7rem; color:var(--gray-500);">to</span>
+              <span style="font-size:0.7rem; color:var(--ink-500);">to</span>
               <input type="date" id="endDate" onchange="filterData()">
             </div>
           </div>
@@ -413,17 +810,17 @@
 
         <div class="kpi-grid">
           <div class="kpi-card">
-            <div class="kpi-label">Total spent</div>
+            <div class="kpi-label"><span class="icon">💸</span> Total spent</div>
             <div class="kpi-value" id="totalAmount">₹0.00</div>
             <div class="kpi-sub" id="kpiCount">0 transactions</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Top category</div>
-            <div class="kpi-value" id="topCategory" style="font-size:1.4rem;">—</div>
+            <div class="kpi-label"><span class="icon">🏆</span> Top category</div>
+            <div class="kpi-value" id="topCategory" style="font-size:1.3rem;">—</div>
             <div class="kpi-sub" id="topCategoryAmount">₹0.00</div>
           </div>
           <div class="kpi-card">
-            <div class="kpi-label">Avg. / transaction</div>
+            <div class="kpi-label"><span class="icon">📈</span> Avg. / txn</div>
             <div class="kpi-value" id="avgAmount">₹0.00</div>
             <div class="kpi-sub">per item</div>
           </div>
@@ -444,8 +841,13 @@
           </div>
         </div>
 
-        <div style="margin-top: 0.5rem;">
-          <h4 style="font-size:0.8rem; font-weight:600; color:var(--gray-600); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:0.5rem;">📋 Recent transactions</h4>
+        <div style="margin-top: 0.4rem;">
+          <div class="table-toolbar">
+            <h4>📋 Recent transactions</h4>
+            <div class="search-box">
+              <input type="search" id="searchInput" placeholder="Search items, category, payment..." oninput="applySearch()">
+            </div>
+          </div>
           <div class="table-wrapper">
             <table>
               <thead>
@@ -457,10 +859,11 @@
                   <th>Qty</th>
                   <th>Amount</th>
                   <th>Payment</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id="itemsTableBody">
-                <tr><td colspan="7" style="text-align:center; color: var(--gray-500);">Loading data…</td></tr>
+                <tr><td colspan="8" style="text-align:center; color: var(--ink-500); padding: 2rem;">Loading data…</td></tr>
               </tbody>
             </table>
           </div>
@@ -469,12 +872,58 @@
     </div>
   </div>
 
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal-backdrop" onclick="if(event.target===this) closeEditModal()">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3>✏️ Edit Transaction</h3>
+        <button class="modal-close" onclick="closeEditModal()" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="editForm" onsubmit="event.preventDefault(); saveEdit();">
+          <div class="edit-grid">
+            <div class="form-group">
+              <label for="editDate">Date</label>
+              <input type="date" id="editDate" required>
+            </div>
+            <div class="form-group">
+              <label for="editCategory">Category</label>
+              <select id="editCategory" required></select>
+            </div>
+            <div class="form-group full-width">
+              <label for="editItems">Items / Description</label>
+              <input type="text" id="editItems" required>
+            </div>
+            <div class="form-group">
+              <label for="editUnit">Unit</label>
+              <select id="editUnit" required></select>
+            </div>
+            <div class="form-group">
+              <label for="editQuantity">Quantity</label>
+              <input type="number" id="editQuantity" step="0.01" min="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="editAmount">Amount (₹)</label>
+              <input type="number" id="editAmount" step="0.01" min="0.01" required>
+            </div>
+            <div class="form-group">
+              <label for="editPaymentMode">Payment Mode</label>
+              <select id="editPaymentMode" required></select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeEditModal()">Cancel</button>
+        <button type="button" id="saveEditBtn" class="btn-save" onclick="saveEdit()">💾 Save Changes</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    /* =====================================================================
-       ⚙️ CONFIG — REPLACE THIS URL with your deployed Web App URL
-    ===================================================================== */
-   // const API_URL = 'PASTE_YOUR_WEB_APP_URL_HERE';
-    const API_URL = 'https://script.google.com/macros/s/AKfycbz3tqAWILMtmVkenX-WweqaXgpEQABiUinMKqF_bHbJmiMVd6r-PJDexEubl3863ULS/exec';
+    /* ⚙️ CONFIG */
+    const API_URL = 'https://script.google.com/macros/s/AKfycbzH3Hjz-v_hJCqX3fR83z4CcSe72sNH50uYfb_6wryVJ_rZbLw4wqJYvH-0QQ_ECt5X/exec';
+
     var FALLBACK_CATEGORIES = [
       'Food & Dining','Utilities','Transport','Shopping',
       'Rent','Entertainment','Healthcare','Others'
@@ -485,14 +934,19 @@
     var globalRawData = null;
     var pieChart = null;
     var barChart = null;
+    var editingRow = null;
+    var itemCounter = 0;
 
-    /* ------------------------------------------------------------------ */
     function getLocalTodayISO() {
       var now = new Date();
       var tzOffset = now.getTimezoneOffset() * 60000;
       return new Date(now.getTime() - tzOffset).toISOString().slice(0, 10);
     }
-
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
     function showStatus(msg, isError) {
       var bar = document.getElementById('statusBar');
       bar.textContent = msg;
@@ -500,102 +954,184 @@
       bar.classList.add('show');
       if (!isError) setTimeout(function () { bar.classList.remove('show'); }, 4000);
     }
-
-    function replaceOptions(selectId, values) {
-      var sel = document.getElementById(selectId);
-      if (!sel) return;
-      var currentValue = sel.value;
-      sel.innerHTML = '';
+    function replaceOptions(selectEl, values, selectedValue) {
+      if (!selectEl) return;
+      selectEl.innerHTML = '';
       values.forEach(function (v) {
         var opt = document.createElement('option');
         opt.value = v;
         opt.textContent = v;
-        sel.appendChild(opt);
+        selectEl.appendChild(opt);
       });
-      if (currentValue && values.indexOf(currentValue) !== -1) sel.value = currentValue;
+      if (selectedValue && values.indexOf(selectedValue) !== -1) selectEl.value = selectedValue;
     }
 
-    function populateDropdowns(options) {
-      if (!options) options = {};
-      replaceOptions('category', options.categories || FALLBACK_CATEGORIES);
-      replaceOptions('unit', options.units || FALLBACK_UNITS);
-      replaceOptions('paymentMode', options.paymentModes || FALLBACK_PAYMENT_MODES);
+    /* MULTI-ITEM */
+    function addItemBlock(initialData) {
+      itemCounter++;
+      var block = document.createElement('div');
+      block.className = 'item-block';
+      block.setAttribute('data-item-id', itemCounter);
+      var data = initialData || {};
+      var today = getLocalTodayISO();
+
+      block.innerHTML =
+        '<div class="item-block-header">' +
+          '<span class="badge">Item #' + itemCounter + '</span>' +
+          '<button type="button" class="btn-remove-item" onclick="removeItemBlock(this)">🗑 Remove</button>' +
+        '</div>' +
+        '<div class="form-grid">' +
+          '<div class="form-group">' +
+            '<label>Date</label>' +
+            '<input type="date" class="item-date" required value="' + (data.date || today) + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Category</label>' +
+            '<select class="item-category" required></select>' +
+          '</div>' +
+          '<div class="form-group full-width">' +
+            '<label>Items / Description</label>' +
+            '<input type="text" class="item-items" placeholder="e.g. Weekly groceries..." required value="' + escapeHtml(data.items || '') + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Unit</label>' +
+            '<select class="item-unit" required></select>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Quantity</label>' +
+            '<input type="number" class="item-quantity" step="0.01" min="0.01" placeholder="1" required value="' + (data.quantity || '') + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Amount (₹)</label>' +
+            '<input type="number" class="item-amount" step="0.01" min="0.01" placeholder="0.00" required value="' + (data.amount || '') + '">' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<label>Payment Mode</label>' +
+            '<select class="item-paymentMode" required></select>' +
+          '</div>' +
+        '</div>';
+
+      document.getElementById('itemsContainer').appendChild(block);
+
+      replaceOptions(block.querySelector('.item-category'),
+        window._categories || FALLBACK_CATEGORIES, data.category);
+      replaceOptions(block.querySelector('.item-unit'),
+        window._units || FALLBACK_UNITS, data.unit);
+      replaceOptions(block.querySelector('.item-paymentMode'),
+        window._paymentModes || FALLBACK_PAYMENT_MODES, data.paymentMode);
+
+      updateRemoveButtons();
+      renumberBlocks();
+      return block;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Init                                                               */
-    /* ------------------------------------------------------------------ */
-    (function init() {
-      document.getElementById('date').value = getLocalTodayISO();
-
-      populateDropdowns({
-        categories: FALLBACK_CATEGORIES,
-        units: FALLBACK_UNITS,
-        paymentModes: FALLBACK_PAYMENT_MODES
-      });
-
-      if (!API_URL || API_URL.indexOf('PASTE_YOUR') === 0) {
-        showStatus('⚠️ Please paste your Web App URL into API_URL in the HTML file.', true);
+    function removeItemBlock(btn) {
+      var block = btn.closest('.item-block');
+      if (!block) return;
+      var container = document.getElementById('itemsContainer');
+      if (container.querySelectorAll('.item-block').length <= 1) {
+        showStatus('⚠️ At least one item is required.', true);
         return;
       }
-
-      fetch(API_URL + '?action=options')
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && !data.error) populateDropdowns(data);
-        })
-        .catch(function (e) { console.warn('Options fetch failed, using fallbacks:', e); });
-
-      loadAnalytics();
-    })();
-
-    /* ------------------------------------------------------------------ */
-    /* Submit                                                             */
-    /* ------------------------------------------------------------------ */
-    document.getElementById('expenseForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      var data = {
-        date: document.getElementById('date').value,
-        category: document.getElementById('category').value,
-        items: document.getElementById('items').value,
-        unit: document.getElementById('unit').value,
-        quantity: document.getElementById('quantity').value,
-        amount: document.getElementById('amount').value,
-        paymentMode: document.getElementById('paymentMode').value
-      };
-
+      block.remove();
+      updateRemoveButtons();
+      renumberBlocks();
+    }
+    function updateRemoveButtons() {
+      var blocks = document.querySelectorAll('.item-block');
+      blocks.forEach(function (b) {
+        var btn = b.querySelector('.btn-remove-item');
+        if (!btn) return;
+        btn.style.display = blocks.length === 1 ? 'none' : 'inline-block';
+      });
+    }
+    function renumberBlocks() {
+      document.querySelectorAll('.item-block').forEach(function (b, i) {
+        var badge = b.querySelector('.badge');
+        if (badge) badge.textContent = 'Item #' + (i + 1);
+      });
+    }
+    function collectItems() {
+      var blocks = document.querySelectorAll('.item-block');
+      var list = [];
+      var valid = true;
+      blocks.forEach(function (b) {
+        var d = {
+          date: b.querySelector('.item-date').value,
+          category: b.querySelector('.item-category').value,
+          items: b.querySelector('.item-items').value.trim(),
+          unit: b.querySelector('.item-unit').value,
+          quantity: b.querySelector('.item-quantity').value,
+          amount: b.querySelector('.item-amount').value,
+          paymentMode: b.querySelector('.item-paymentMode').value
+        };
+        if (!d.date || !d.category || !d.items || !d.unit || !d.quantity || !d.amount) valid = false;
+        list.push(d);
+      });
+      return { list: list, valid: valid };
+    }
+    function submitAllItems() {
+      var result = collectItems();
+      if (!result.valid) { showStatus('⚠️ Please fill all fields in every item.', true); return; }
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
-      btn.textContent = 'Saving…';
-
+      btn.textContent = 'Saving ' + result.list.length + ' item(s)…';
       fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(data)
+        body: JSON.stringify({ items: result.list })
       })
         .then(function (r) { return r.json(); })
         .then(function (res) {
           if (res && res.success === false) throw new Error(res.error || 'Unknown error');
-          document.getElementById('expenseForm').reset();
-          document.getElementById('date').value = getLocalTodayISO();
+          document.getElementById('itemsContainer').innerHTML = '';
+          itemCounter = 0;
+          addItemBlock();
           btn.disabled = false;
-          btn.textContent = '➕ Add Expense';
+          btn.textContent = '💾 Save All Expenses';
           var msg = document.getElementById('successMsg');
+          msg.textContent = '✅ ' + result.list.length + ' expense(s) saved successfully!';
           msg.style.display = 'block';
-          setTimeout(function () { msg.style.display = 'none'; }, 3000);
+          setTimeout(function () { msg.style.display = 'none'; }, 3500);
           loadAnalytics();
         })
         .catch(function (err) {
           showStatus('❌ Save failed: ' + err.message, true);
           btn.disabled = false;
-          btn.textContent = '➕ Add Expense';
+          btn.textContent = '💾 Save All Expenses';
         });
-    });
+    }
 
-    /* ------------------------------------------------------------------ */
-    /* Load analytics                                                     */
-    /* ------------------------------------------------------------------ */
+    /* INIT */
+    (function init() {
+      replaceOptions(document.getElementById('editCategory'), FALLBACK_CATEGORIES);
+      replaceOptions(document.getElementById('editUnit'), FALLBACK_UNITS);
+      replaceOptions(document.getElementById('editPaymentMode'), FALLBACK_PAYMENT_MODES);
+      addItemBlock();
+      if (!API_URL || API_URL.indexOf('PASTE_YOUR') === 0) {
+        showStatus('⚠️ Please paste your Web App URL into API_URL in the HTML file.', true);
+        return;
+      }
+      fetch(API_URL + '?action=options')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (!data || data.error) return;
+          window._categories = data.categories || FALLBACK_CATEGORIES;
+          window._units = data.units || FALLBACK_UNITS;
+          window._paymentModes = data.paymentModes || FALLBACK_PAYMENT_MODES;
+          document.querySelectorAll('.item-block').forEach(function (b) {
+            replaceOptions(b.querySelector('.item-category'), window._categories, b.querySelector('.item-category').value);
+            replaceOptions(b.querySelector('.item-unit'), window._units, b.querySelector('.item-unit').value);
+            replaceOptions(b.querySelector('.item-paymentMode'), window._paymentModes, b.querySelector('.item-paymentMode').value);
+          });
+          replaceOptions(document.getElementById('editCategory'), window._categories);
+          replaceOptions(document.getElementById('editUnit'), window._units);
+          replaceOptions(document.getElementById('editPaymentMode'), window._paymentModes);
+        })
+        .catch(function (e) { console.warn('Options fetch failed:', e); });
+      loadAnalytics();
+    })();
+
     function loadAnalytics() {
       fetch(API_URL + '?action=analytics')
         .then(function (r) { return r.json(); })
@@ -610,47 +1146,35 @@
         });
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Filtering                                                          */
-    /* ------------------------------------------------------------------ */
     function handleFilterChange() {
       var filterVal = document.getElementById('timeFilter').value;
       var customContainer = document.getElementById('customDateContainer');
-      if (filterVal === 'custom') {
-        customContainer.classList.add('active');
-      } else {
-        customContainer.classList.remove('active');
-        filterData();
-      }
+      if (filterVal === 'custom') customContainer.classList.add('active');
+      else { customContainer.classList.remove('active'); filterData(); }
     }
 
     function filterData() {
       if (!globalRawData) return;
-
       var filterVal = document.getElementById('timeFilter').value;
-      var now = new Date();
-      now.setHours(0, 0, 0, 0);
-
+      var now = new Date(); now.setHours(0, 0, 0, 0);
       var filteredItems = (globalRawData.itemsList || []).filter(function (item) {
         if (!item.date) return false;
         var itemDate = new Date(item.date);
         itemDate.setHours(0, 0, 0, 0);
         if (isNaN(itemDate.getTime())) return false;
-
-        if (filterVal === 'today') {
-          return itemDate.getTime() === now.getTime();
-        } else if (filterVal === 'weekly') {
-          var weekAgo = new Date(now);
-          weekAgo.setDate(now.getDate() - 7);
+        if (filterVal === 'today') return itemDate.getTime() === now.getTime();
+        if (filterVal === 'weekly') {
+          var weekAgo = new Date(now); weekAgo.setDate(now.getDate() - 7);
           return itemDate >= weekAgo && itemDate <= now;
-        } else if (filterVal === 'monthly') {
-          return itemDate.getMonth() === now.getMonth() &&
-                 itemDate.getFullYear() === now.getFullYear();
-        } else if (filterVal === '3months') {
-          var threeMonthsAgo = new Date(now);
-          threeMonthsAgo.setMonth(now.getMonth() - 3);
+        }
+        if (filterVal === 'monthly') {
+          return itemDate.getMonth() === now.getMonth() && itemDate.getFullYear() === now.getFullYear();
+        }
+        if (filterVal === '3months') {
+          var threeMonthsAgo = new Date(now); threeMonthsAgo.setMonth(now.getMonth() - 3);
           return itemDate >= threeMonthsAgo && itemDate <= now;
-        } else if (filterVal === 'custom') {
+        }
+        if (filterVal === 'custom') {
           var startStr = document.getElementById('startDate').value;
           var endStr = document.getElementById('endDate').value;
           var start = startStr ? new Date(startStr) : null;
@@ -664,11 +1188,7 @@
         return true;
       });
 
-      var totalAmount = 0;
-      var byCategory = {};
-      var byMonthYear = {};
-      var count = filteredItems.length;
-
+      var totalAmount = 0, byCategory = {}, byMonthYear = {}, count = filteredItems.length;
       filteredItems.forEach(function (item) {
         var amount = Number(item.amount) || 0;
         totalAmount += amount;
@@ -677,13 +1197,11 @@
         var dateObj = new Date(item.date);
         var monthYearStr = 'Unknown';
         if (!isNaN(dateObj.getTime())) {
-          var months = ['January','February','March','April','May','June',
-                        'July','August','September','October','November','December'];
+          var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
           monthYearStr = months[dateObj.getMonth()] + ' ' + dateObj.getFullYear();
         }
         byMonthYear[monthYearStr] = (byMonthYear[monthYearStr] || 0) + amount;
       });
-
       var topEntry = Object.entries(byCategory).sort(function (a, b) { return b[1] - a[1]; })[0];
       var topCategory = topEntry ? topEntry[0] : '—';
       var topCategoryAmt = topEntry ? topEntry[1] : 0;
@@ -698,18 +1216,15 @@
         '₹' + topCategoryAmt.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       document.getElementById('avgAmount').textContent =
         '₹' + avgAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
       renderCharts(byCategory, byMonthYear);
       renderTable(filteredItems);
     }
+    function applySearch() { if (!globalRawData) return; filterData(); }
 
-    /* ------------------------------------------------------------------ */
-    /* Charts                                                             */
-    /* ------------------------------------------------------------------ */
+    /* CHARTS */
     function renderCharts(byCategory, byMonthYear) {
       if (pieChart) { pieChart.destroy(); pieChart = null; }
       if (barChart) { barChart.destroy(); barChart = null; }
-
       var catLabels = Object.keys(byCategory);
       var catValues = catLabels.map(function (k) { return byCategory[k]; });
       var catColors = ['#6366f1','#8b5cf6','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#14b8a6'];
@@ -720,35 +1235,21 @@
           labels: catLabels.length ? catLabels : ['No data'],
           datasets: [{
             data: catValues.length ? catValues : [1],
-            backgroundColor: catLabels.length ? catColors.slice(0, catLabels.length) : ['#e5e7eb'],
-            borderWidth: 2, borderColor: '#ffffff', hoverOffset: 6
+            backgroundColor: catLabels.length ? catColors.slice(0, catLabels.length) : ['#e2e8f0'],
+            borderWidth: 3, borderColor: '#ffffff', hoverOffset: 8
           }]
         },
         options: {
-          responsive: true, maintainAspectRatio: false, cutout: '65%',
+          responsive: true, maintainAspectRatio: false, cutout: '68%',
           plugins: {
-            legend: {
-              position: 'bottom',
-              labels: {
-                boxWidth: 10, font: { size: 9, family: 'Inter' }, padding: 8,
-                usePointStyle: true, pointStyle: 'circle'
-              }
-            },
-            tooltip: {
-              callbacks: {
-                label: function (ctx) {
-                  return (ctx.label || '') + ': ₹' +
-                    (ctx.parsed || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 });
-                }
-              }
-            }
+            legend: { position: 'bottom', labels: { boxWidth: 9, font: { size: 9, family: 'Inter', weight: '500' }, padding: 10, usePointStyle: true, pointStyle: 'circle' } },
+            tooltip: { callbacks: { label: function (ctx) { return (ctx.label || '') + ': ₹' + (ctx.parsed || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 }); } } }
           }
         }
       });
 
       var monthLabels = Object.keys(byMonthYear);
-      var monthOrder = { January:1, February:2, March:3, April:4, May:5, June:6,
-                         July:7, August:8, September:9, October:10, November:11, December:12 };
+      var monthOrder = { January:1, February:2, March:3, April:4, May:5, June:6, July:7, August:8, September:9, October:10, November:11, December:12 };
       monthLabels.sort(function (a, b) {
         var pA = a.split(' '), pB = b.split(' ');
         if (pA[1] !== pB[1]) return parseInt(pA[1]) - parseInt(pB[1]);
@@ -763,65 +1264,142 @@
           datasets: [{
             label: 'Spending (₹)',
             data: barValues.length ? barValues : [0],
-            backgroundColor: 'rgba(99, 102, 241, 0.75)',
-            borderRadius: 6, borderSkipped: false, barPercentage: 0.65
+            backgroundColor: function (ctx) {
+              var chart = ctx.chart;
+              var { ctx: canvasCtx, chartArea } = chart;
+              if (!chartArea) return 'rgba(99, 102, 241, 0.75)';
+              var gradient = canvasCtx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+              gradient.addColorStop(0, 'rgba(99, 102, 241, 0.55)');
+              gradient.addColorStop(1, 'rgba(139, 92, 246, 0.95)');
+              return gradient;
+            },
+            borderRadius: 8, borderSkipped: false, barPercentage: 0.6
           }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
           plugins: {
             legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: function (ctx) {
-                  return '₹' + ctx.parsed.y.toLocaleString('en-IN', { minimumFractionDigits: 2 });
-                }
-              }
-            }
+            tooltip: { callbacks: { label: function (ctx) { return '₹' + ctx.parsed.y.toLocaleString('en-IN', { minimumFractionDigits: 2 }); } } }
           },
           scales: {
-            y: {
-              beginAtZero: true,
-              grid: { color: '#e5e7eb', drawBorder: false },
-              ticks: { font: { size: 9, family: 'Inter' }, callback: function (v) { return '₹' + v; } }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { font: { size: 9, family: 'Inter' }, maxRotation: 30 }
-            }
+            y: { beginAtZero: true, grid: { color: '#e2e8f0', drawBorder: false }, ticks: { font: { size: 9, family: 'Inter' }, callback: function (v) { return '₹' + v; } } },
+            x: { grid: { display: false }, ticks: { font: { size: 9, family: 'Inter' }, maxRotation: 30 } }
           }
         }
       });
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Table                                                              */
-    /* ------------------------------------------------------------------ */
+    /* TABLE */
     function renderTable(items) {
       var tbody = document.getElementById('itemsTableBody');
       tbody.innerHTML = '';
-
+      var q = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+      if (q) {
+        items = items.filter(function (item) {
+          return (
+            String(item.items || '').toLowerCase().indexOf(q) !== -1 ||
+            String(item.category || '').toLowerCase().indexOf(q) !== -1 ||
+            String(item.unit || '').toLowerCase().indexOf(q) !== -1 ||
+            String(item.paymentMode || '').toLowerCase().indexOf(q) !== -1 ||
+            String(item.date || '').toLowerCase().indexOf(q) !== -1
+          );
+        });
+      }
       if (items.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color: var(--gray-500);">No items for this filter range.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: var(--ink-500); padding: 2rem;">🔎 No transactions found.</td></tr>';
         return;
       }
-
       items.slice().reverse().forEach(function (item) {
         var tr = document.createElement('tr');
         tr.innerHTML =
-          '<td>' + (item.date || '-') + '</td>' +
-          '<td>' + (item.category || '-') + '</td>' +
-          '<td>' + (item.items || '-') + '</td>' +
-          '<td>' + (item.unit || '-') + '</td>' +
+          '<td>' + escapeHtml(item.date || '-') + '</td>' +
+          '<td><span class="category-chip">' + escapeHtml(item.category || '-') + '</span></td>' +
+          '<td>' + escapeHtml(item.items || '-') + '</td>' +
+          '<td>' + escapeHtml(item.unit || '-') + '</td>' +
           '<td>' + (Number(item.quantity) || 0) + '</td>' +
           '<td class="amount-cell">₹' + Number(item.amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 }) + '</td>' +
-          '<td>' + (item.paymentMode || '-') + '</td>';
+          '<td>' + escapeHtml(item.paymentMode || '-') + '</td>' +
+          '<td><button class="btn-edit" data-row="' + item.row + '">✏️ Edit</button></td>';
         tbody.appendChild(tr);
+      });
+      tbody.querySelectorAll('.btn-edit').forEach(function (btn) {
+        btn.addEventListener('click', function () { openEditModal(Number(this.getAttribute('data-row'))); });
       });
     }
 
+    /* EDIT MODAL */
+    function openEditModal(row) {
+      if (!globalRawData) return;
+      var item = (globalRawData.itemsList || []).find(function (x) { return x.row === row; });
+      if (!item) { showStatus('❌ Transaction not found.', true); return; }
+      editingRow = row;
+      document.getElementById('editDate').value = item.date || '';
+      document.getElementById('editCategory').value = item.category || '';
+      document.getElementById('editItems').value = item.items || '';
+      document.getElementById('editUnit').value = item.unit || '';
+      document.getElementById('editQuantity').value = item.quantity || 1;
+      document.getElementById('editAmount').value = item.amount || 0;
+      document.getElementById('editPaymentMode').value = item.paymentMode || '';
+      document.getElementById('editModal').classList.add('show');
+      setTimeout(function () { document.getElementById('editItems').focus(); }, 80);
+    }
+    function closeEditModal() {
+      document.getElementById('editModal').classList.remove('show');
+      editingRow = null;
+    }
+    function saveEdit() {
+      if (!editingRow) return;
+      var data = {
+        row: editingRow,
+        date: document.getElementById('editDate').value,
+        category: document.getElementById('editCategory').value,
+        items: document.getElementById('editItems').value,
+        unit: document.getElementById('editUnit').value,
+        quantity: document.getElementById('editQuantity').value,
+        amount: document.getElementById('editAmount').value,
+        paymentMode: document.getElementById('editPaymentMode').value
+      };
+      if (!data.date || !data.category || !data.items || !data.unit || !data.quantity || !data.amount) {
+        showStatus('⚠️ Please fill all fields.', true);
+        return;
+      }
+      var btn = document.getElementById('saveEditBtn');
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+      fetch(API_URL + '?action=update', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res && res.success === false) throw new Error(res.error || 'Unknown error');
+          closeEditModal();
+          btn.disabled = false;
+          btn.textContent = '💾 Save Changes';
+          showStatus('✅ Transaction updated successfully.');
+          loadAnalytics();
+        })
+        .catch(function (err) {
+          showStatus('❌ Update failed: ' + err.message, true);
+          btn.disabled = false;
+          btn.textContent = '💾 Save Changes';
+        });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && document.getElementById('editModal').classList.contains('show')) closeEditModal();
+    });
+
     window.handleFilterChange = handleFilterChange;
     window.filterData = filterData;
+    window.applySearch = applySearch;
+    window.openEditModal = openEditModal;
+    window.closeEditModal = closeEditModal;
+    window.saveEdit = saveEdit;
+    window.addItemBlock = addItemBlock;
+    window.removeItemBlock = removeItemBlock;
+    window.submitAllItems = submitAllItems;
   </script>
 </body>
 </html>
